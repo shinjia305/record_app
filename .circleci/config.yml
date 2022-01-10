@@ -1,0 +1,61 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  build:
+    docker:
+    - image: circleci/ruby:3.0.3
+      environment:
+        - BUNDLER_VERSION: 2.2.32
+        - RAILS_ENV: 'test'
+        - DB_HOST: 127.0.0.1
+    - image: circleci/postgres
+      environment:
+        POSTGRES_USERNAME: postgres
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: myapp_test
+
+    working_directory: ~/record_app
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "Gemfile.lock" }}
+          - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            gem install bundler -v 2.2.32
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+          - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run: mv ./config/database.yml.ci ./config/database.yml
+
+      - run:
+          name: Database setup
+          command: |
+             bundle exec rake db:create
+             bundle exec rake db:schema:load
+
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop 
+
+      - run:
+          name: Run rspec
+          command: bundle exec rspec
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
