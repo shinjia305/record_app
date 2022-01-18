@@ -12,8 +12,12 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+    <%= render "layouts/header" %>
+    <div class="bg-white dark:bg-slate-900 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
+      <main class="container mx-auto mt-10 px-5 flex">
+        <%= yield %>
+      </main>
+    </div>
+    <%= render "layouts/footer" %>
   </body>
 </html>
