@@ -78,3 +78,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers", require: !ENV['SELENIUM_REMOTE_URL']
 end
+
+gem 'devise'
