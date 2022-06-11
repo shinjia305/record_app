@@ -13,10 +13,10 @@
 
   <body>
     <%= render "layouts/header" %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <div class="bg-white dark:bg-slate-900 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl">
       <main class="container mx-auto mt-10 px-5 flex">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
         <%= yield %>
       </main>
     </div>
