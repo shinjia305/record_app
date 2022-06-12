@@ -65,6 +65,7 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'letter_opener_web'
   gem 'pry-byebug'
   gem 'rubocop', require: false
   gem 'rubocop-performance', require: false
@@ -78,3 +79,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers", require: !ENV['SELENIUM_REMOTE_URL']
 end
+
+gem 'devise'

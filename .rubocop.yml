@@ -50,7 +50,7 @@ Lint/StructNewOverride:
   Enabled: true
 
 Layout/LineLength:
-  Max: 150
+  Max: 155
 
 Metrics/AbcSize:
   Exclude:
