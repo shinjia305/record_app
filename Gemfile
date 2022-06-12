@@ -81,3 +81,4 @@ group :test do
 end
 
 gem 'devise'
+gem 'devise_invitable', '~>2.0.0'
