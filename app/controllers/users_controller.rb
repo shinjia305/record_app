@@ -4,20 +4,20 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}がユーザー一覧画面を開きました")
+    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}がユーザー一覧画面を開きました", {})
   end
 
   def show
-    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}の詳細画面を開きました")
+    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}の詳細画面を開きました", {})
   end
 
   def new
     @user = User.new
-    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}がユーザー新規作成画面を開きました")
+    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}がユーザー新規作成画面を開きました", {})
   end
 
   def edit
-    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}の編集画面を開きました")
+    SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}の編集画面を開きました", {})
   end
 
   def create
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}を作成しました")
+        SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}を作成しました", @user.saved_changes)
         format.html { redirect_to @user, notice: "#{@user.name}を作成しました" }
         format.json { render :show, status: :created, location: @user }
       else
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}を更新しました")
+        SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}を更新しました", @user.saved_changes)
         format.html { redirect_to @user, notice: "#{@user.name}を更新しました" }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}を削除しました")
+      SystemOperationLog.create_log(current_admin.id, "#{current_admin.name}が#{@user.name}を削除しました", @user.saved_changes)
       format.html { redirect_to users_url, notice: "ユーザーを削除しました" }
       format.json { head :no_content }
     end
