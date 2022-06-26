@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :admins, only: [:show]
+  resources :system_operation_logs, only: [:index]
 
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
