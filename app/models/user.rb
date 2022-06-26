@@ -1,4 +1,9 @@
 class User < ApplicationRecord
-  has_many :system_operation_logs, dependent: :destroy
-  validates :name, presence: true
+  def self.current_user=(user)
+    Thread.current[:user] = user
+  end
+
+  def self.current_user
+    Thread.current[:user]
+  end
 end
